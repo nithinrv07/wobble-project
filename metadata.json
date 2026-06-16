@@ -1,0 +1,6 @@
+{
+  "name": "Receptionist Dashboard",
+  "description": "An Indian-localized high-fidelity QueueCure patient queue management system with interactive list, statistics tracking, simulated mobile SMS notifications, and audio queue calling alerts.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+@variant dark (.dark &);
+
+@theme {
+  --color-brand-bg: #0F0A1A;
+  --color-brand-card: rgba(255, 255, 255, 0.05);
+  --color-brand-card-hover: rgba(255, 255, 255, 0.08);
+  --color-brand-input: #1A1426;
+  --color-brand-border: rgba(255, 255, 255, 0.1);
+  --color-brand-border-hover: rgba(255, 255, 255, 0.18);
+  --color-brand-teal: #14b8a6;
+  --color-brand-teal-light: #2dd4bf;
+  --color-brand-purple: #a855f7;
+  --color-brand-purple-light: #c084fc;
+}
+
+/* Custom scrollbar styling for high-density tables and views */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand-teal);
+}
+
+/* High density glow animations */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(20, 184, 166, 0.2);
+    border-color: rgba(20, 184, 166, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(20, 184, 166, 0.4);
+    border-color: rgba(20, 184, 166, 0.6);
+  }
+}
+
+.active-serving-glow {
+  animation: pulse-glow 3s infinite ease-in-out;
+}
