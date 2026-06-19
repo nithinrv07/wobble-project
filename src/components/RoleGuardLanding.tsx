@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Shield, User, Key, ArrowRight, Eye, EyeOff, Activity, Bell, Flame, CheckCircle2, ChevronRight, Search, Globe } from 'lucide-react';
-import { Patient } from '../types';
+import { Patient, SmsMessage } from '../types';
+import PhoneMockup from './PhoneMockup';
+import { getReceptionistTranslation } from '../utils/receptionistTranslations';
 
 const translations = {
   en: {
@@ -493,6 +495,7 @@ interface RoleGuardLandingProps {
   onRegisterPatientToken: (name: string, phone: string, visitType: any, priority: any) => void;
   tokenCounter: number;
   avgWaitTimePerPatient: number;
+  smsMessages: SmsMessage[];
 }
 
 export default function RoleGuardLanding({
@@ -502,6 +505,7 @@ export default function RoleGuardLanding({
   onRegisterPatientToken,
   tokenCounter,
   avgWaitTimePerPatient,
+  smsMessages,
 }: RoleGuardLandingProps) {
   const [role, setRole] = useState<'selection' | 'receptionist_login' | 'patient_portal'>(() => {
     const cached = sessionStorage.getItem('clinic_selected_role');
@@ -773,7 +777,7 @@ export default function RoleGuardLanding({
 
       {/* PATIENT PORTAL INTERFACE */}
       {role === 'patient_portal' && (
-        <div className="w-full max-w-4xl bg-white dark:bg-[#1A1426] rounded-3xl border border-slate-200/80 dark:border-white/5 p-5 sm:p-7 shadow-2xl flex flex-col gap-6">
+        <div className="w-full max-w-6xl bg-white dark:bg-[#1A1426] rounded-3xl border border-slate-200/80 dark:border-white/5 p-5 sm:p-7 shadow-2xl flex flex-col gap-6">
           
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-100 dark:border-white/5 pb-4 gap-4">
@@ -827,7 +831,7 @@ export default function RoleGuardLanding({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
             {/* left col: Live Status & Token Board */}
-            <div className="lg:col-span-7 space-y-4">
+            <div className="lg:col-span-5 space-y-4">
               
               {/* CURRENTLY SERVING BOARD */}
               <div className="bg-teal-500/10 border border-teal-500/20 rounded-2xl p-5 flex items-center justify-between text-[#0F0A1A] dark:text-white gap-4">
@@ -908,8 +912,8 @@ export default function RoleGuardLanding({
 
             </div>
 
-            {/* right col: Self OPD Slip generator (Patient input) */}
-            <div className="lg:col-span-4.5 space-y-4 lg:col-span-5">
+            {/* middle col: Self OPD Slip generator (Patient input) */}
+            <div className="lg:col-span-4 space-y-4">
               
               {/* LOOKUP TICKET COMPONENT */}
               <div className="bg-indigo-500/5 border border-indigo-500/10 p-4 rounded-2xl">
@@ -1060,6 +1064,11 @@ export default function RoleGuardLanding({
 
               </div>
 
+            </div>
+
+            {/* right col: Phone mockup SMS notifications */}
+            <div className="lg:col-span-3">
+              <PhoneMockup smsMessages={smsMessages} t={getReceptionistTranslation(lang)} />
             </div>
 
           </div>

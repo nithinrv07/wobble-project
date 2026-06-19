@@ -429,6 +429,7 @@ export default function App() {
             handleIssueToken(name, phone, visitType, priority);
           }}
           avgWaitTimePerPatient={avgWaitTimePerPatient}
+          smsMessages={smsMessages}
         />
       </div>
     );
