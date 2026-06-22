@@ -116,8 +116,8 @@ export type AppLanguage = 'en' | 'hi' | 'bn' | 'te' | 'mr' | 'ta' | 'gu' | 'kn' 
 
 export const receptionistTranslations: Record<AppLanguage, ReceptionistTranslation> = {
   en: {
-    appName: "QueueCure",
-    appSubtitle: "National QueueCure OPD Portal • Helpdesk & Triage",
+    appName: "ClinicQ",
+    appSubtitle: "National ClinicQ OPD Portal • Helpdesk & Triage",
     liveStatus: "AYUSHMAN LIVE",
     lockDesk: "Lock Desk",
     
@@ -177,7 +177,7 @@ export const receptionistTranslations: Record<AppLanguage, ReceptionistTranslati
     shortcutEmergencyTitle: "Emergency Auto-Sort:",
     shortcutEmergencyDesc: "Critical patients are inserted with absolute priority over standard queues.",
     
-    historyTitle: "QUEUECURE CLINICAL AUDIT TRAIL LOGBOOK",
+    historyTitle: "CLINICQ CLINICAL AUDIT TRAIL LOGBOOK",
     historySubtitle: "Complete operations logs of processed tokens, including completed consults & missed no-shows",
     placeholderSearch: "Search Token, Phone or Name...",
     btnExportCsv: "Export CSV",
@@ -220,7 +220,7 @@ export const receptionistTranslations: Record<AppLanguage, ReceptionistTranslati
     footerLiveTag: "Ayushman Digitized"
   },
   hi: {
-    appName: "स्वास्थ्य कतार हब (QueueCure)",
+    appName: "स्वास्थ्य कतार हब (ClinicQ)",
     appSubtitle: "राष्ट्रीय स्वास्थ्य ओपीडी पोर्टल • सहायता डेस्क और ट्राइएज",
     liveStatus: "आयुष्मान लाइव (AYUSHMAN LIVE)",
     lockDesk: "डेस्क लॉक करें",
@@ -324,7 +324,7 @@ export const receptionistTranslations: Record<AppLanguage, ReceptionistTranslati
     footerLiveTag: "आयुष्मान डिजिटल"
   },
   bn: {
-    appName: "স্বাস্থ্য সারি হাব (QueueCure)",
+    appName: "স্বাস্থ্য সারি হাব (ClinicQ)",
     appSubtitle: "জাতীয় স্বাস্থ্য ওপিডি পোর্টাল • হেল্পডেস্ক ও ট্রায়াজ",
     liveStatus: "আয়ুষ্মান লাইভ",
     lockDesk: "ডেস্ক লক করুন",
@@ -428,7 +428,7 @@ export const receptionistTranslations: Record<AppLanguage, ReceptionistTranslati
     footerLiveTag: "আয়ুষ্মান ডিজিটালাইজড"
   },
   te: {
-    appName: "స్వాస్థ్య క్యూ హబ్ (QueueCure)",
+    appName: "స్వాస్థ్య క్యూ హబ్ (ClinicQ)",
     appSubtitle: "జాతీయ స్వాస్థ్య OPD పోర్టల్ • సహాయ కేంద్రం & ట్రయాజ్",
     liveStatus: "ఆయుష్మాన్ లైవ్",
     lockDesk: "డెస్క్ లాక్ చెయ్",
@@ -532,7 +532,7 @@ export const receptionistTranslations: Record<AppLanguage, ReceptionistTranslati
     footerLiveTag: "ఆయుష్మాన్ డిజిటలైజ్డ్"
   },
   mr: {
-    appName: "स्वास्थ्य रांग हब (QueueCure)",
+    appName: "स्वास्थ्य रांग हब (ClinicQ)",
     appSubtitle: "राष्ट्रीय स्वास्थ्य ओपीडी पोर्टल • हेल्पडेस्क आणि ट्रायज",
     liveStatus: "आयुष्मान लाईव्ह (AYUSHMAN LIVE)",
     lockDesk: "डेस्क लॉक करा",
@@ -636,7 +636,7 @@ export const receptionistTranslations: Record<AppLanguage, ReceptionistTranslati
     footerLiveTag: "आयुष्मान डिजिटल"
   },
   ta: {
-    appName: "சுவஸ்தியா வரிசை மையம் (QueueCure)",
+    appName: "சுவஸ்தியா வரிசை மையம் (ClinicQ)",
     appSubtitle: "தேசிய சுவஸ்தியா OPD போர்ட்டல் • உதவி மையம் & ட்ரையாஜ்",
     liveStatus: "ஆயுஷ்மான் லைவ் (AYUSHMAN LIVE)",
     lockDesk: "டெஸ்க் பூட்டு",
@@ -740,13 +740,13 @@ export const receptionistTranslations: Record<AppLanguage, ReceptionistTranslati
     footerLiveTag: "ஆயுஷ்மான் டிஜிட்டல் முறை"
   },
   gu: {
-    appName: "સ્વાસ્થ્ય કતાર હબ (QueueCure)",
+    appName: "સ્વાસ્થ્ય કતાર હબ (ClinicQ)",
     appSubtitle: "રાષ્ટ્રીય સ્વાસ્થ્ય ઓપીડી પોર્ટલ • હેલ્પડેસ્ક અને ટ્રાયઝ",
     liveStatus: "આયુષ્માન લાઈવ (AYUSHMAN LIVE)",
     lockDesk: "ડેસ્ક લોક કરો",
     
     statInQueue: "કતારમાં",
-    statAvgWait: "સ્વાસ્થ્ય કતાર હબ (QueueCure)",
+    statAvgWait: "સ્વાસ્થ્ય કતાર હબ (ClinicQ)",
     statServedToday: "આજે સેવા આપી",
     statNoShows: "ગેરહાજર",
     mins: "મિનિટ",
@@ -844,7 +844,7 @@ export const receptionistTranslations: Record<AppLanguage, ReceptionistTranslati
     footerLiveTag: "આયુષ્માન ડિજિટલ"
   },
   kn: {
-    appName: "ಸ್ವಾಸ್ಥ್ಯ ಸರತಿ ಹಬ್ (QueueCure)",
+    appName: "ಸ್ವಾಸ್ಥ್ಯ ಸರತಿ ಹಬ್ (ClinicQ)",
     appSubtitle: "ರಾಷ್ಟ್ರೀಯ ಸ್ವಾಸ್ಥ್ಯ OPD ಪೋರ್ಟಲ್ • ಸಹಾಯ ಕೇಂದ್ರ ಮತ್ತು ಟ್ರಯಾಜ್",
     liveStatus: "ಆಯುಷ್ಮಾನ್ ಲೈವ್",
     lockDesk: "ಡೆಸ್ಕ್ ಲಾಕ್ ಮಾಡಿ",
@@ -948,7 +948,7 @@ export const receptionistTranslations: Record<AppLanguage, ReceptionistTranslati
     footerLiveTag: "ಆಯುಷ್ಮಾನ್ ಡಿಜಿಟಲೈಸ್ಡ್"
   },
   ml: {
-    appName: "ಸ್ವಾಸ್ಥ್ಯ ಕ್ಯೂ ಹಬ್ (QueueCure)",
+    appName: "ಸ್ವಾಸ್ಥ್ಯ ಕ್ಯೂ ಹಬ್ (ClinicQ)",
     appSubtitle: "ദേശീയ സ്വാസ്ഥ്യ ഒപിഡി പോർട്ടൽ • ഹെൽപ്പ് ഡെസ്ക് & ട്രിയാഷ്",
     liveStatus: "ആയുഷ്മാൻ ലൈവ്",
     lockDesk: "ഡെസ്ക് ലോക്ക് ചെയ്യുക",
@@ -1052,7 +1052,7 @@ export const receptionistTranslations: Record<AppLanguage, ReceptionistTranslati
     footerLiveTag: "ആയുഷ്മാൻ ഡിജിറ്റലൈസ്ഡ്"
   },
   pa: {
-    appName: "ਸਵਾਸਥਿਆ ਕਤਾਰ ਹੱਬ (QueueCure)",
+    appName: "ਸਵਾਸਥਿਆ ਕਤਾਰ ਹੱਬ (ClinicQ)",
     appSubtitle: "ਰਾਸ਼ਟਰੀ ਸਵਾਸਥਿਆ ਓਪੀਡੀ ਪੋਰਟਲ • ਹੈਲਪਡੈਸਕ ਅਤੇ ਟ੍ਰਾਈਆਜ਼",
     liveStatus: "ਆਯੁਸ਼ਮਾਨ ਲਾਈਵ",
     lockDesk: "ਡੈਸਕ ਲਾਕ ਕਰੋ",
@@ -1156,7 +1156,7 @@ export const receptionistTranslations: Record<AppLanguage, ReceptionistTranslati
     footerLiveTag: "ਆਯੁਸ਼ਮਾਨ ਡਿਜੀਟਲ"
   },
   ur: {
-    appName: "صحت کیو ہب (QueueCure)",
+    appName: "صحت کیو ہب (ClinicQ)",
     appSubtitle: "قومی صحت او پی ڈی پورٹل • ہیلپ ڈیسک اور ٹریاژ",
     liveStatus: "ایوشمان لائیو",
     lockDesk: "ڈیسک لاک کریں",
@@ -1260,7 +1260,7 @@ export const receptionistTranslations: Record<AppLanguage, ReceptionistTranslati
     footerLiveTag: "ایوشمان ڈیجیٹل"
   },
   or: {
-    appName: "ସ୍ୱାସ୍ଥ୍ୟ କ୍ୟୁ ହବ୍ (QueueCure)",
+    appName: "ସ୍ୱାସ୍ଥ୍ୟ କ୍ୟୁ ହବ୍ (ClinicQ)",
     appSubtitle: "ଜାତୀୟ ସ୍ୱାସ୍ଥ୍ୟ OPD ପୋର୍ଟାଲ • ହେଲ୍ପଡେସ୍କ ଏବଂ ଟ୍ରାଇଆଜ୍",
     liveStatus: "ଆୟୁଷ୍ମାନ ଲାଇଭ୍",
     lockDesk: "ଡେସ୍କ ଲକ୍ କରନ୍ତୁ",
@@ -1364,7 +1364,7 @@ export const receptionistTranslations: Record<AppLanguage, ReceptionistTranslati
     footerLiveTag: "ଆୟୁଷ୍ମାନ ଡିଜିଟାଲାଇଜ୍ଡ"
   },
   as: {
-    appName: "স্বাস্থ্য শাৰী হাব (QueueCure)",
+    appName: "স্বাস্থ্য শাৰী হাব (ClinicQ)",
     appSubtitle: "ৰাষ্ট্ৰীয় স্বাস্থ্য ওপিডি পৰ্টেল • সহায়ক ডেক্স আৰু ট্ৰায়াজ",
     liveStatus: "আয়ুষ্মান লাইভ",
     lockDesk: "ডেক্স লক কৰক",

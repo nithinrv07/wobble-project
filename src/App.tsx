@@ -113,7 +113,7 @@ export default function App() {
       {
         id: 'default-sms-1',
         timestamp: new Date(Date.now() - 35 * 60000).toISOString(),
-        text: `QueueCure: Token #44 issued for Amit Sharma. Priority Tier: Emergency Triage (Atyant Care)\nReason: Urgent Casualty Triage.\nYou are currently position 1 in the queue.\nEst. wait time: ~8 mins. We will alert you here when your turn approaches.`,
+        text: `ClinicQ: Token #44 issued for Amit Sharma. Priority Tier: Emergency Triage (Atyant Care)\nReason: Urgent Casualty Triage.\nYou are currently position 1 in the queue.\nEst. wait time: ~8 mins. We will alert you here when your turn approaches.`,
         phone: '98450-12345',
         type: 'success'
       }
@@ -283,7 +283,7 @@ export default function App() {
     const waitTimeEst = positionInLine * avgWaitTimePerPatient;
     const priorityAlertMsg = priority !== 'Regular' ? ` Priority Tier: ${priority}` : '';
     
-    const smsText = `QueueCure: Token #${nextToken} issued for ${name}.${priorityAlertMsg}\nReason: ${visitType}.\nYou are currently position ${positionInLine} in the queue.\nEst. wait time: ~${waitTimeEst} mins. We will alert you here when your turn approaches.`;
+    const smsText = `ClinicQ: Token #${nextToken} issued for ${name}.${priorityAlertMsg}\nReason: ${visitType}.\nYou are currently position ${positionInLine} in the queue.\nEst. wait time: ~${waitTimeEst} mins. We will alert you here when your turn approaches.`;
     
     sendSimulatedSms(smsText, phone, 'success');
   };
@@ -315,7 +315,7 @@ export default function App() {
     announcePatientCall(updatedPatient.tokenNumber, updatedPatient.name, roomNumber);
 
     // Dispatch calling SMS alert
-    const smsText = `QueueCure: Token #${updatedPatient.tokenNumber} is now being called! Please proceed immediately to ${roomNumber}.\nOPD Clinic specialist is ready for checkup.`;
+    const smsText = `ClinicQ: Token #${updatedPatient.tokenNumber} is now being called! Please proceed immediately to ${roomNumber}.\nOPD Clinic specialist is ready for checkup.`;
     sendSimulatedSms(smsText, updatedPatient.phone, 'call');
   };
 
@@ -337,7 +337,7 @@ export default function App() {
     setServing(null);
 
     // send sms follow up
-    const smsText = `QueueCure: Thank you for your visit today. Your consultation file has been successfully logged. OPD follow-up notes, prescriptions, and diagnostic suggestions are ready under your Digital Health ID.`;
+    const smsText = `ClinicQ: Thank you for your visit today. Your consultation file has been successfully logged. OPD follow-up notes, prescriptions, and diagnostic suggestions are ready under your Digital Health ID.`;
     sendSimulatedSms(smsText, completedPatient.phone, 'info');
   };
 
@@ -352,7 +352,7 @@ export default function App() {
     setServing(null);
 
     // send cancelled sms
-    const smsText = `QueueCure: Token #${missedPatient.tokenNumber} has been marked as a No-Show. If you missed your slot, please re-register at the OPD Counter main desk for a new token ID.`;
+    const smsText = `ClinicQ: Token #${missedPatient.tokenNumber} has been marked as a No-Show. If you missed your slot, please re-register at the OPD Counter main desk for a new token ID.`;
     sendSimulatedSms(smsText, missedPatient.phone, 'cancel');
   };
 
@@ -371,7 +371,7 @@ export default function App() {
     setHistory((prev) => [missedPatient, ...prev]);
 
     // send cancellation SMS
-    const smsText = `QueueCure: Your waitlist reservation for Token #${target.tokenNumber} has been successfully cancelled.`;
+    const smsText = `ClinicQ: Your waitlist reservation for Token #${target.tokenNumber} has been successfully cancelled.`;
     sendSimulatedSms(smsText, target.phone, 'cancel');
   };
 
@@ -444,7 +444,7 @@ export default function App() {
             <div>
               <div className="flex items-center gap-1.5">
                 <h1 className="text-base font-extrabold tracking-tight text-slate-900 dark:text-white font-sans uppercase">
-                  QUEUECURE <span className="text-teal-600 dark:text-teal-400 font-normal">QUEUE HUB</span>
+                  CLINICQ <span className="text-teal-600 dark:text-teal-400 font-normal">QUEUE HUB</span>
                 </h1>
                 <span className="inline-flex items-center gap-1 bg-emerald-500/10 px-2 py-1 rounded-full border border-emerald-500/20">
                   <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
@@ -601,7 +601,7 @@ export default function App() {
       <footer className="mt-8 border-t border-slate-200 dark:border-white/5 py-4 text-[10px] text-slate-500">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex gap-4">
-            <span>{t.footerOfficer}: queuecure_op_102</span>
+            <span>{t.footerOfficer}: clinicq_op_102</span>
             <span>{t.footerDuty}: Dr. A. K. Verma</span>
             <span>{t.footerLocation}: OPD Desk, AIIMS New Delhi</span>
             <span className="text-teal-500 font-semibold">{t.footerLiveTag}</span>

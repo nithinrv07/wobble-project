@@ -3,11 +3,12 @@ import { Shield, User, Key, ArrowRight, Eye, EyeOff, Activity, Bell, Flame, Chec
 import { Patient, SmsMessage } from '../types';
 import PhoneMockup from './PhoneMockup';
 import { getReceptionistTranslation } from '../utils/receptionistTranslations';
+import { translatePatientName } from '../utils/nameTranslator';
 
 const translations = {
   en: {
     portalTitle: "Patient Self-Care & Status Portal",
-    subtitle: "Real-time QueueCure Waiting Statistics",
+    subtitle: "Real-time ClinicQ Waiting Statistics",
     changeRole: "← Change Role",
     nowServing: "Now in OPD Cabin",
     noPatientCalled: "No patient currently called",
@@ -26,7 +27,7 @@ const translations = {
     patientNotFound: "Token or Patient not found in active wait queue.",
     generateToken: "Generate OPD Entrance Token",
     tokenRegistered: "TOKEN REGISTERED!",
-    successInfo: "Your QueueCure queue ID was added successfully. You will receive simulated SMS alert status as your clinical slot nears.",
+    successInfo: "Your ClinicQ queue ID was added successfully. You will receive simulated SMS alert status as your clinical slot nears.",
     bookAnother: "Book Another",
     labelFullName: "Full Patient Name",
     labelMobile: "Mobile Telephone",
@@ -40,7 +41,9 @@ const translations = {
     unitPediatric: "Pediatric Consultant",
     priorityRegular: "Regular",
     priorityChild: "Child/Infant",
-    prioritySenior: "Senior Citizen"
+    prioritySenior: "Senior Citizen",
+    announcementsTitle: "Announcements",
+    announcementTicker: "📢 INSTRUCTIONS: Please proceed to the designated OPD room immediately when your token is called • Senior citizens, infants, and emergency triage are prioritized automatically in the waitlist • Keep your digital token ready for check-in verification • Thank you for your cooperation and patience."
   },
   hi: {
     portalTitle: "मरीज स्वयं-सेवा और स्थिति पोर्टल",
@@ -77,7 +80,9 @@ const translations = {
     unitPediatric: "बाल रोग विशेषज्ञ",
     priorityRegular: "सामान्य",
     priorityChild: "बच्चा/शिशु",
-    prioritySenior: "वरिष्ठ नागरिक"
+    prioritySenior: "वरिष्ठ नागरिक",
+    announcementsTitle: "सूचनाएं",
+    announcementTicker: "📢 निर्देश: जब आपका टोकन बुलाया जाए, तो कृपया तुरंत निर्दिष्ट ओपीडी कमरे में जाएं • वरिष्ठ नागरिकों, शिशुओं और आपातकालीन मामलों को प्रतीक्षा सूची में स्वतः प्राथमिकता दी जाती है • सत्यापन के लिए अपना डिजिटल टोकन तैयार रखें • आपके सहयोग और धैर्य के लिए धन्यवाद।"
   },
   bn: {
     portalTitle: "রোগী স্ব-পরিষেবা ও স্ট্যাটাস পোর্টাল",
@@ -114,7 +119,9 @@ const translations = {
     unitPediatric: "শিশু বিশেষজ্ঞ পরামর্শ",
     priorityRegular: "সাধারণ",
     priorityChild: "শিশু/নবজাতক",
-    prioritySenior: "প্রবীণ নাগরিক"
+    prioritySenior: "প্রবীণ নাগরিক",
+    announcementsTitle: "ঘোষণা",
+    announcementTicker: "📢 নির্দেশাবলী: আপনার টোকেন নম্বর ডাকার সাথে সাথে অনুগ্রহ করে নির্ধারিত ওপিডি রুমে যান • প্রবীণ নাগরিক, শিশু এবং জরুরি রোগীদের অগ্রাধিকার দেওয়া হয় • যাচাইকরণের জন্য আপনার ডিজিটাল টোকেনটি প্রস্তুত রাখুন • আপনার সহযোগিতা এবং ধৈর্যের জন্য ধন্যবাদ।"
   },
   te: {
     portalTitle: "రోగి స్వయం సహాయక & స్థితి పోర్టల్",
@@ -151,7 +158,9 @@ const translations = {
     unitPediatric: "పిల్లల వైద్య నిపుణుడు",
     priorityRegular: "సాధారణ",
     priorityChild: "బిడ్డ/శిశువు",
-    prioritySenior: "సీనియర్ సిటిజెన్"
+    prioritySenior: "సీనియర్ సిటిజెన్",
+    announcementsTitle: "ప్రకటనలు",
+    announcementTicker: "📢 సూచనలు: మీ టోకెన్ పిలిచిన వెంటనే దయచేసి కేటాయించిన OPD గదికి వెళ్లండి • సీనియర్ సిటిజన్లు, శిశువులు మరియు అత్యవసర కేసులకు క్యూలో ప్రాಧాన్యత ఇవ్వబడుతుంది • ధృవీకరణ కోసం మీ డిజిటల్ టోకెన్ సిద్ధంగా ఉంచుకోండి • మీ సహకారానికి మరియు ఓపికకు ధన్యవాదాలు."
   },
   mr: {
     portalTitle: "रुग्ण स्वयं-सेवा आणि स्थिती पोर्टल",
@@ -188,7 +197,9 @@ const translations = {
     unitPediatric: "बालरोग तज्ज्ञ",
     priorityRegular: "सामान्य",
     priorityChild: "लहान मूल/शिशू",
-    prioritySenior: "ज्येष्ठ नागरिक"
+    prioritySenior: "ज्येष्ठ नागरिक",
+    announcementsTitle: "सूचना",
+    announcementTicker: "📢 मार्गदर्शक तत्त्वे: तुमचा टोकन नंबर पुकारल्यावर कृपया लगेच संबंधित ओपीडी खोलीत जा • ज्येष्ठ नागरिक, लहान मुले आणि आपत्कालीन रुग्णांना प्रतीक्षा यादीत आपोआप प्राधान्य दिले जाते • पडताळणीसाठी तुमचा डिजिटल टोकन तयार ठेवा • आपल्या सहकार्याबद्दल आणि संयमाबद्दल धन्यवाद।"
   },
   ta: {
     portalTitle: "நோயாளி சுய சேவை & நிலை போர்டல்",
@@ -225,7 +236,9 @@ const translations = {
     unitPediatric: "குழந்தை நல மருத்துவர்",
     priorityRegular: "சாதாரண",
     priorityChild: "குழந்தை/குழந்தை",
-    prioritySenior: "மூத்த குடிமகன்"
+    prioritySenior: "மூத்த குடிமகன்",
+    announcementsTitle: "அறிவிப்புகள்",
+    announcementTicker: "📢 வழிமுறைகள்: உங்கள் டோக்கன் எண் அழைக்கப்பட்டவுடன் உடனடியாக ஒதுக்கப்பட்ட ஓபிடி அறைக்கு செல்லவும் • முதியவர்கள், குழந்தைகள் மற்றும் அவசர சிகிச்சை நோயாளிகளுக்கு முன்னுரிமை வழங்கப்படும் • சரிபார்ப்புக்கு உங்கள் டிஜிட்டல் டோக்கனை தயாராக வைத்திருக்கவும் • உங்கள் ஒத்துழைப்புக்கும் பொறுமைக்கும் நன்றி."
   },
   gu: {
     portalTitle: "દર્દી સ્વ-સેવા અને સ્થિતિ પોર્ટલ",
@@ -262,7 +275,9 @@ const translations = {
     unitPediatric: "બાળ રોગ નિષ્ણાત",
     priorityRegular: "સામાન્ય",
     priorityChild: "બાળક/શિશુ",
-    prioritySenior: "વરિષ્ઠ નાગરિક"
+    prioritySenior: "વરિષ્ઠ નાગરિક",
+    announcementsTitle: "જાહેરાતો",
+    announcementTicker: "📢 સૂચનાઓ: જ્યારે તમારો ટોકન બોલાવવામાં આવે ત્યારે કૃપા કરીને નિયુક્ત ઓપીડી રૂમમાં તરત જ જાઓ • વરિષ્ઠ નાગરિકો, બાળકો અને ઇમરજન્સી દર્દીઓને આપમેળે પ્રાધાન્ય આપવામાં આવે છે • વેરિફિકેશન માટે તમારો ડિજિટલ ટોકન તૈયાર રાખો • તમારા સહકાર અને ધીરજ બદલ આભાર."
   },
   kn: {
     portalTitle: "ರೋಗಿಗಳ ಸ್ವಯಂ ಸೇವೆ ಮತ್ತು ಸ್ಥಿತಿ ಪೋರ್ಟಲ್",
@@ -299,7 +314,9 @@ const translations = {
     unitPediatric: "ಮಕ್ಕಳ ತಜ್ಞರ ಸಮಾಲೋಚನೆ",
     priorityRegular: "ಸಾಮಾನ್ಯ ಕ್ಯೂ",
     priorityChild: "ಶಿಶು/ಮಗು",
-    prioritySenior: "ಹಿರಿಯ ನಾಗರಿಕರು"
+    prioritySenior: "ಹಿರಿಯ ನಾಗರಿಕರು",
+    announcementsTitle: "ಪ್ರಕಟಣೆಗಳು",
+    announcementTicker: "📢 ಸೂಚನೆಗಳು: ನಿಮ್ಮ ಟೋಕನ್ ಕರೆದ ತಕ್ಷಣ ದಯವಿಟ್ಟು ನಿಗದಿಪಡಿಸಿದ ಒಪಿಡಿ ಕೋಣೆಗೆ ಹೋಗಿ • ಹಿರಿಯ ನಾಗರಿಕರು, ಮಕ್ಕಳು ಮತ್ತು ತುರ್ತು ಚಿಕಿತ್ಸೆ ರೋಗಿಗಳಿಗೆ ಆದ್ಯತೆ ನೀಡಲಾಗುತ್ತದೆ • ಪರಿಶೀಲನೆಗಾಗಿ ನಿಮ್ಮ ಡಿಜಿಟಲ್ ಟೋಕನ್ ಸಿದ್ಧವಾಗಿಡಿ • ನಿಮ್ಮ ಸಹಕಾರ ಮತ್ತು ತಾಳ್ಮೆಗೆ ಧನ್ಯವಾದಗಳು."
   },
   ml: {
     portalTitle: "രോഗികളുടെ സ്വയം സേവന പോർട്ടൽ",
@@ -336,7 +353,9 @@ const translations = {
     unitPediatric: "ശിശുരോഗ വിദഗ്ദ്ധൻ",
     priorityRegular: "സാധാരണ",
     priorityChild: "ശിശു/കുട്ടി",
-    prioritySenior: "മുതിർന്ന പൗരന്മാർ"
+    prioritySenior: "മുതിർന്ന പൗരന്മാർ",
+    announcementsTitle: "അറിയിപ്പുകൾ",
+    announcementTicker: "📢 നിർദ്ദേശങ്ങൾ: നിങ്ങളുടെ ടോക്കൺ നമ്പർ വിളിക്കുമ്പോൾ ദയവായി നിശ്ചിത ഒപിഡി മുറിയിലേക്ക് ഉടൻ പോവുക • മുതിർന്ന പൗരന്മാർ, കുട്ടികൾ, അടിയന്തിര വിഭാഗക്കാർ എന്നിവർക്ക് മുൻഗണന നൽകുന്നതാണ് • പരിശോധനയ്ക്കായി ഡിജിറ്റൽ ടോക്കൺ കരുതുക • നിങ്ങളുടെ സഹകരണത്തിനും ക്ഷമയ്ക്കും നന്ദി."
   },
   pa: {
     portalTitle: "ਮਰੀਜ਼ ਸਵੈ-ਸੇਵਾ ਅਤੇ ਸਥਿਤੀ ਪੋਰਟਲ",
@@ -373,7 +392,9 @@ const translations = {
     unitPediatric: "ਬੱਚਿਆਂ ਦੇ ਮਾਹਰ",
     priorityRegular: "ਸਧਾਰਨ",
     priorityChild: "ਬੱਚਾ/ਸ਼ਿਸ਼ੂ",
-    prioritySenior: "ਬਜ਼ੁਰਗ / ਦਿਵਯਾਂਗ"
+    prioritySenior: "ਬਜ਼ੁਰਗ / ਦਿਵਯਾਂਗ",
+    announcementsTitle: "ਘੋਸ਼ਣਾਵਾਂ",
+    announcementTicker: "📢 ਨਿਰਦੇਸ਼: ਜਦੋਂ ਤੁਹਾਡਾ ਟੋਕਨ ਬੁਲਾਇਆ ਜਾਵੇ, ਕਿਰਪਾ ਕਰਕੇ ਤੁਰੰਤ ਨਿਰਧਾਰਤ ਓਪੀਡੀ ਕਮਰੇ ਵਿੱਚ ਜਾਓ • ਬਜ਼ੁਰਗ ਨਾਗਰਿਕਾਂ, ਬੱਚਿਆਂ ਅਤੇ ਐਮਰਜੈਂਸੀ ਮਰੀਜ਼ਾਂ ਨੂੰ ਪਹਿਲ ਦਿੱਤੀ ਜਾਂਦੀ ਹੈ • ਵੈਰੀਫਿਕੇਸ਼ਨ ਲਈ ਆਪਣਾ ਡਿਜੀਟਲ ਟੋਕਨ ਤਿਆਰ ਰੱਖੋ • ਤੁਹਾਡੇ ਸਹਿਯੋਗ ਅਤੇ ਸਬਰ ਲਈ ਧੰਨਵਾਦ।"
   },
   ur: {
     portalTitle: "مریض سیلف سروس اور اسٹیٹس پورٹل",
@@ -410,7 +431,9 @@ const translations = {
     unitPediatric: "بچوں کا ماہر معالج",
     priorityRegular: "عام",
     priorityChild: "بچہ/شیر خوار",
-    prioritySenior: "بزرگ شہری / معذور افراد"
+    prioritySenior: "بزرگ شہری / معذور افراد",
+    announcementsTitle: "اعلانات",
+    announcementTicker: "📢 ہدایات: براہ کرم ٹوکن نمبر پکارے جانے پر فوری طور پر نامزد او پی ڈی کمرے میں جائیں • بزرگ شہریوں، بچوں اور ہنگامی مریضوں کو خود بخود ترجیح دی جاتی ہے • تصدیق کے لیے اپنا ڈیجیറ്റل ٹوکن تیار رکھیں • آپ کے تعاون اور صبر کا شکریہ۔"
   },
   or: {
     portalTitle: "ରୋଗୀ ସ୍ୱୟଂ ସେବା ଏବଂ ସ୍ଥିତି ପୋର୍ଟାଲ",
@@ -443,11 +466,13 @@ const translations = {
     unitConsultation: "ସାଧାରଣ ପରାമર્ଶ",
     unitCheckup: "OPD ଚେକଅପ୍",
     unitDiagnostics: "ଡାଇଗ୍ନୋଷ୍ଟିକ୍ସ",
-    unitVaccination: "ଟୀକାକරણ",
-    unitPediatric: "ଶਿଶୁରୋଗ ବିଶେषଜ୍ଞ",
+    unitVaccination: "ଟୀକାକରଣ",
+    unitPediatric: "ଶିଶୁରୋଗ ବିଶେषଜ୍ଞ",
     priorityRegular: "ସାଧାରଣ",
     priorityChild: "ଶିଶୁ/ଛୋଟ ପିଲା",
-    prioritySenior: "ବରିଷ୍ଠ ନାଗରିକ / ଦିବ୍ୟାଙ୍ଗ"
+    prioritySenior: "ବରିଷ୍ଠ ନାਗରିକ / ଦିବ୍ୟାଙ୍ଗ",
+    announcementsTitle: "ଘୋଷଣା",
+    announcementTicker: "📢 ନିର୍ଦ୍ଦେଶାବଳୀ: ଆପଣଙ୍କର ଟୋକନ ନମ୍ବର ଡକାଯିବା ମାତ୍ରେ ଦୟାକରି ନିର୍ଦ୍ଧାରିତ ଓପିଡି ରୁମକୁ ଯାଆନ୍ତୁ • ବରିଷ୍ଠ ନାଗରିକ, ଶିଶୁ ଏବଂ ଜରୁରୀକାଳୀନ ରୋଗୀଙ୍କୁ ପ୍ରାଥମିକତା ଦିଆଯାଏ • ଯାଞ୍ଚ ପାଇଁ ଆପଣଙ୍କର ଡିଜିଟାଲ ଟୋକନ ପ୍ରସ୍ତୁତ ରଖନ୍ତୁ • ସହଯୋગ ଏବଂ ଧର୍ଯ୍ୟ ପାଇଁ ଧନ୍ୟବାଦ।"
   },
   as: {
     portalTitle: "ৰোগী স্ব-সেৱা আৰু স্থিতি প’ৰ্টেল",
@@ -475,7 +500,7 @@ const translations = {
     labelFullName: "ৰোগীৰ সম্পূৰ্ণ নাম",
     labelMobile: "মোবাইল ফোন",
     labelOpdUnit: "ওপিডি বিভাগ",
-    labelPriority: "विशेष অগ্ৰাধিকাৰ",
+    labelPriority: "বিশেষ অগ্ৰাধিকাৰ",
     btnProcessToken: "ওপিডি টোকেন প্ৰিণ্ট কৰক",
     unitConsultation: "সাধাৰণ পৰামৰ্শ",
     unitCheckup: "ওপিডি পৰীক্ষা",
@@ -484,7 +509,9 @@ const translations = {
     unitPediatric: "শিশু ৰোগ বিশেষজ্ঞ",
     priorityRegular: "সাধাৰণ",
     priorityChild: "শিশু/কেঁচুৱা",
-    prioritySenior: "জ্যেষ্ঠ নাগৰিক / দিব্যাংগ"
+    prioritySenior: "জ্যেষ্ঠ নাগৰিক / দিব্যাংগ",
+    announcementsTitle: "ঘোষণাসমূহ",
+    announcementTicker: "📢 নিৰ্দেশনাৱলী: আপোনাৰ টোকেন নম্বৰ মতাৰ লগে লগে অনুগ্ৰহ কৰি নিৰ্ধাৰিত ওপিডি কোঠালৈ যাওক • জ্যেষ্ঠ নাগৰিক, শিশু আৰু জৰুৰীকালীন ৰোগীক অগ্ৰাধিকাৰ দিয়া হয় • পৰীক্ষণৰ বাবে আপোনাৰ ডিজিটেল টোকেন সাজু ৰাখক • আপোনাৰ সহযোগিতা আৰু ধৈৰ্য্যৰ বাবে ধন্যবাদ।"
   }
 };
 
@@ -533,6 +560,18 @@ export default function RoleGuardLanding({
   }, [lang]);
 
   const t = translations[lang];
+
+  // TV Digital Clock State
+  const [tvTime, setTvTime] = useState(new Date());
+
+  useEffect(() => {
+    if (role === 'patient_portal') {
+      const timer = setInterval(() => {
+        setTvTime(new Date());
+      }, 1000);
+      return () => clearInterval(timer);
+    }
+  }, [role]);
   
   // Login states
   const [password, setPassword] = useState('');
@@ -551,14 +590,14 @@ export default function RoleGuardLanding({
   const [lookupResult, setLookupResult] = useState<Patient | null>(null);
   const [lookupSearched, setLookupSearched] = useState(false);
 
-  const correctPassword = 'swasthya'; // clear and simple credential
+  const correctPassword = 'Admin123'; // clear and simple credential
 
   const handleLoginSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (password.toLowerCase() === correctPassword) {
+    if (password === correctPassword) {
       onEnterReceptionist();
     } else {
-      setLoginError('Invalid Passcode. Hint: Use "swasthya" as the official passcode.');
+      setLoginError('Invalid Passcode. Hint: Use "Admin123" as the official passcode.');
     }
   };
 
@@ -614,7 +653,7 @@ export default function RoleGuardLanding({
       {/* Upper Brand Badge */}
       <div className="mb-8 text-center flex flex-col items-center">
         <h1 className="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white uppercase">
-          QUEUECURE <span className="text-teal-600 dark:text-teal-400 font-normal">OPD INTEGRITY</span>
+          CLINICQ <span className="text-teal-600 dark:text-teal-400 font-normal">OPD INTEGRITY</span>
         </h1>
         <p className="text-[10px] uppercase tracking-[0.2em] font-sans font-bold text-slate-500 dark:text-slate-400 mt-1">
           Ministry of Health • National Clinic Gateway
@@ -677,15 +716,15 @@ export default function RoleGuardLanding({
                 </div>
                 <div>
                   <h3 className="text-sm font-bold text-slate-805 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors uppercase tracking-tight">
-                    Patient Dashboard
+                    Patient Waiting Room View
                   </h3>
                   <p className="text-[11px] text-slate-500 dark:text-slate-450 mt-1 leading-relaxed">
-                    Check your token position, see who is currently in OPD, generate standard OPD slips, and receive mobile alerts.
+                    Wall-mounted clinic display screen showing active cabin calls, current queue waitlist, and estimated wait times.
                   </p>
                 </div>
               </div>
               <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
-                <span>Standard Patient Access</span>
+                <span>Waiting Room TV Monitor View</span>
                 <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
               </div>
             </button>
@@ -760,7 +799,7 @@ export default function RoleGuardLanding({
                 Official Hint:
               </span>
               <p className="text-[10px] text-slate-600 dark:text-slate-400 mt-0.5 leading-relaxed">
-                The password is <strong className="text-teal-600 dark:text-teal-400 font-extrabold bg-teal-500/10 border border-teal-500/20 px-1 py-0.5 rounded">swasthya</strong>. Staff can proceed directly using it.
+                The password is <strong className="text-teal-600 dark:text-teal-400 font-extrabold bg-teal-500/10 border border-teal-500/20 px-1 py-0.5 rounded">Admin123</strong>. Staff can proceed directly using it.
               </p>
             </div>
 
@@ -775,302 +814,219 @@ export default function RoleGuardLanding({
         </div>
       )}
 
-      {/* PATIENT PORTAL INTERFACE */}
+      {/* PATIENT PORTAL INTERFACE — CLINIC WAITING ROOM TV MONITOR VIEW */}
       {role === 'patient_portal' && (
-        <div className="w-full max-w-6xl bg-white dark:bg-[#1A1426] rounded-3xl border border-slate-200/80 dark:border-white/5 p-5 sm:p-7 shadow-2xl flex flex-col gap-6">
+        <div className="w-full max-w-7xl bg-white/70 dark:bg-[#1A1426]/80 text-slate-850 dark:text-white rounded-3xl border border-slate-200 dark:border-white/5 p-6 sm:p-8 shadow-2xl flex flex-col gap-6 font-sans relative overflow-hidden backdrop-blur-md animate-fade-in">
           
-          {/* Header */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-100 dark:border-white/5 pb-4 gap-4">
-            <div>
-              <h2 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-tight flex items-center gap-1.5">
-                <Activity size={16} className="text-indigo-500" />
-                <span>{t.portalTitle}</span>
-              </h2>
-              <p className="text-[9px] uppercase font-bold tracking-widest text-slate-450 dark:text-slate-400 mt-0.5">
-                {t.subtitle}
-              </p>
-            </div>
-            
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-[10px] font-bold text-slate-405 dark:text-slate-400 uppercase tracking-widest flex items-center gap-1">
-                <Globe size={11} className="text-indigo-550 dark:text-indigo-400" />
-                <span>Lang:</span>
-              </span>
-              <div className="relative bg-slate-50 dark:bg-white/5 border border-slate-200/60 dark:border-white/5 rounded-md px-2 py-1 flex items-center">
-                <select
-                  value={lang}
-                  onChange={(e) => setLang(e.target.value as any)}
-                  className="text-[10px] font-bold uppercase tracking-wider bg-transparent text-slate-700 dark:text-slate-300 focus:outline-hidden border-none cursor-pointer pr-1"
-                >
-                  <option value="en" className="bg-white dark:bg-[#1A1426] text-slate-850 dark:text-slate-200">EN (English)</option>
-                  <option value="hi" className="bg-white dark:bg-[#1A1426] text-slate-850 dark:text-slate-200">HI (हिन्दी)</option>
-                  <option value="bn" className="bg-white dark:bg-[#1A1426] text-slate-850 dark:text-slate-200">BN (বাংলা)</option>
-                  <option value="te" className="bg-white dark:bg-[#1A1426] text-slate-850 dark:text-slate-200">TE (తెలుగు)</option>
-                  <option value="mr" className="bg-white dark:bg-[#1A1426] text-slate-850 dark:text-slate-200">MR (मराठी)</option>
-                  <option value="ta" className="bg-white dark:bg-[#1A1426] text-slate-850 dark:text-slate-200">TA (தமிழ்)</option>
-                  <option value="gu" className="bg-white dark:bg-[#1A1426] text-slate-850 dark:text-slate-200">GU (ગુજરાતી)</option>
-                  <option value="kn" className="bg-white dark:bg-[#1A1426] text-slate-850 dark:text-slate-200">KN (ಕನ್ನಡ)</option>
-                  <option value="ml" className="bg-white dark:bg-[#1A1426] text-slate-850 dark:text-slate-200">ML (മലയാളം)</option>
-                  <option value="pa" className="bg-white dark:bg-[#1A1426] text-slate-850 dark:text-slate-200">PA (ਪੰਜਾਬੀ)</option>
-                  <option value="ur" className="bg-white dark:bg-[#1A1426] text-slate-850 dark:text-slate-200">UR (اردو)</option>
-                  <option value="or" className="bg-white dark:bg-[#1A1426] text-slate-850 dark:text-slate-200">OR (ଓଡ଼ିଆ)</option>
-                  <option value="as" className="bg-white dark:bg-[#1A1426] text-slate-850 dark:text-slate-200">AS (অসমীয়া)</option>
-                </select>
+          {/* Header Panel */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-200 dark:border-white/5 pb-5 gap-4">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-xl bg-teal-500/10 text-teal-600 dark:text-teal-400 flex items-center justify-center animate-pulse">
+                <Activity size={22} />
               </div>
-              <span className="text-slate-300 dark:text-white/10 mx-1">|</span>
-              <button
-                onClick={() => setRole('selection')}
-                className="text-[10px] font-bold uppercase tracking-wider text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer align-middle py-1 px-1.5"
-              >
-                {t.changeRole}
-              </button>
+              <div>
+                <h2 className="text-base font-extrabold text-slate-900 dark:text-white uppercase tracking-tight flex items-center gap-1.5">
+                  <span>CLINICQ Live Waiting Lounge Monitor</span>
+                  <span className="inline-flex items-center gap-1 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20 text-[9px] font-bold text-emerald-600 dark:text-emerald-400">
+                    <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-ping"></span>
+                    <span>LIVE TV BOARD</span>
+                  </span>
+                </h2>
+                <p className="text-[9px] uppercase font-bold tracking-widest text-slate-505 dark:text-slate-400 mt-0.5">
+                  WAITING ROOM VIEW • REAL-TIME DISPATCH DISPLAY
+                </p>
+              </div>
+            </div>
+
+            {/* Time and Utilities */}
+            <div className="flex items-center gap-4.5 flex-wrap">
+              {/* Digital Clock */}
+              <div className="bg-slate-100/50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-4 py-1.5 rounded-xl text-center shadow-inner">
+                <span className="text-lg font-black font-mono text-teal-655 dark:text-teal-400 tracking-wider">
+                  {tvTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+                </span>
+                <span className="block text-[8px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mt-0.5">
+                  {tvTime.toLocaleDateString([], { weekday: 'short', month: 'short', day: '2-digit' })}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <div className="relative bg-slate-100/50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg px-2 py-1.5 flex items-center">
+                  <Globe size={11} className="text-teal-600 dark:text-teal-400 shrink-0 mr-1" />
+                  <select
+                    value={lang}
+                    onChange={(e) => setLang(e.target.value as any)}
+                    className="text-[10px] font-bold uppercase tracking-wider bg-transparent text-slate-705 dark:text-slate-300 focus:outline-hidden border-none cursor-pointer pr-1"
+                  >
+                    <option value="en" className="bg-white dark:bg-[#1A1426] text-slate-855 dark:text-slate-200">EN (English)</option>
+                    <option value="hi" className="bg-white dark:bg-[#1A1426] text-slate-855 dark:text-slate-200">HI (हिन्दी)</option>
+                    <option value="bn" className="bg-white dark:bg-[#1A1426] text-slate-855 dark:text-slate-200">BN (বাংলা)</option>
+                    <option value="te" className="bg-white dark:bg-[#1A1426] text-slate-855 dark:text-slate-200">TE (తెలుగు)</option>
+                    <option value="mr" className="bg-white dark:bg-[#1A1426] text-slate-855 dark:text-slate-200">MR (मराठी)</option>
+                    <option value="ta" className="bg-white dark:bg-[#1A1426] text-slate-855 dark:text-slate-200">TA (தமிழ்)</option>
+                    <option value="gu" className="bg-white dark:bg-[#1A1426] text-slate-855 dark:text-slate-200">GU (ગુજરાતી)</option>
+                    <option value="kn" className="bg-white dark:bg-[#1A1426] text-slate-855 dark:text-slate-200">KN (ಕನ್ನಡ)</option>
+                    <option value="ml" className="bg-white dark:bg-[#1A1426] text-slate-855 dark:text-slate-200">ML (മലയാളം)</option>
+                    <option value="pa" className="bg-white dark:bg-[#1A1426] text-slate-855 dark:text-slate-200">PA (ਪੰਜਾਬੀ)</option>
+                    <option value="ur" className="bg-white dark:bg-[#1A1426] text-slate-855 dark:text-slate-200">UR (اردو)</option>
+                    <option value="or" className="bg-white dark:bg-[#1A1426] text-slate-855 dark:text-slate-200">OR (ଓଡ଼ିଆ)</option>
+                    <option value="as" className="bg-white dark:bg-[#1A1426] text-slate-855 dark:text-slate-200">AS (অসমীয়া)</option>
+                  </select>
+                </div>
+
+                <span className="text-slate-300 dark:text-slate-700 mx-1">|</span>
+                
+                <button
+                  onClick={() => setRole('selection')}
+                  className="text-[10px] font-bold uppercase tracking-wider bg-slate-105 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 px-3 py-1.5 rounded-lg text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white cursor-pointer align-middle transition-colors active:scale-95 animate-fade-in"
+                >
+                  {t.changeRole}
+                </button>
+              </div>
             </div>
           </div>
 
-          {/* Grid Layout inside Portal */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          {/* Grid Layout inside TV Monitor */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-            {/* left col: Live Status & Token Board */}
-            <div className="lg:col-span-5 space-y-4">
-              
-              {/* CURRENTLY SERVING BOARD */}
-              <div className="bg-teal-500/10 border border-teal-500/20 rounded-2xl p-5 flex items-center justify-between text-[#0F0A1A] dark:text-white gap-4">
-                <div className="space-y-1">
-                  <span className="text-[9px] uppercase font-bold tracking-wider text-teal-800 dark:text-teal-400 flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 bg-rose-500 rounded-full animate-ping"></span>
-                    {t.nowServing}
-                  </span>
-                  {serving ? (
-                    <>
-                      <h3 className="text-xl font-extrabold max-w-[200px] truncate">
-                        {serving.name}
-                      </h3>
-                      <p className="text-[10px] font-bold font-mono text-teal-700 dark:text-teal-450">
-                        OPD HUB: {serving.roomNumber || 'Specialist Ward'}
-                      </p>
-                    </>
-                  ) : (
-                    <h3 className="text-lg font-bold text-slate-500 dark:text-slate-400">
+            {/* Left Panel: Currently Serving Board */}
+            <div className="lg:col-span-5 bg-white dark:bg-[#1A1426]/60 border border-slate-200 dark:border-emerald-500/20 rounded-3xl p-6 flex flex-col justify-between shadow-lg relative min-h-[380px] active-serving-glow">
+              <div>
+                <span className="text-[10px] uppercase font-bold tracking-widest text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5 mb-4">
+                  <span className="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-ping"></span>
+                  <span>{t.nowServing}</span>
+                </span>
+                
+                {serving ? (
+                  <div className="space-y-6 animate-fade-in">
+                    <div className="flex items-center gap-5">
+                      <div className="h-28 w-28 rounded-2xl bg-emerald-500 text-slate-950 flex flex-col items-center justify-center border border-emerald-600 dark:border-emerald-400 shrink-0 shadow-lg shadow-emerald-500/20">
+                        <span className="text-[10px] uppercase tracking-wider font-extrabold opacity-80">{t.token}</span>
+                        <span className="text-5xl font-black font-mono">#{serving.tokenNumber}</span>
+                      </div>
+                      
+                      <div className="space-y-1.5">
+                        <h3 className="text-2xl font-black text-slate-800 dark:text-white leading-tight truncate max-w-[220px]">
+                          {translatePatientName(serving.name, lang)}
+                        </h3>
+                        <div className="inline-block text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-md font-bold text-rose-600 dark:text-rose-300 bg-rose-500/10 border border-rose-500/20">
+                          {serving.priority}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-4 p-4.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-805 rounded-2xl flex items-center justify-between">
+                      <div>
+                        <span className="text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Proceed immediately to</span>
+                        <h4 className="text-lg font-bold text-teal-650 dark:text-teal-400 uppercase font-mono mt-0.5">
+                          {serving.roomNumber || 'Consulting Room'}
+                        </h4>
+                      </div>
+                      <div className="h-10 w-10 rounded-xl bg-teal-500/10 text-teal-600 dark:text-teal-400 flex items-center justify-center border border-teal-500/20">
+                        <Globe size={18} />
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="h-56 flex flex-col items-center justify-center text-center">
+                    <Bell size={40} className="text-slate-450 dark:text-slate-650 animate-bounce mb-3" />
+                    <h3 className="text-lg font-extrabold text-slate-500 dark:text-slate-400">
                       {t.noPatientCalled}
                     </h3>
-                  )}
-                </div>
-
-                {serving ? (
-                  <div className="h-20 w-20 rounded-xl bg-teal-500 text-[#0F0A1A] flex flex-col items-center justify-center border border-teal-600 shrink-0">
-                    <span className="text-[8px] uppercase tracking-wider font-extrabold opacity-75">{t.token}</span>
-                    <span className="text-3xl font-black">#{serving.tokenNumber}</span>
-                  </div>
-                ) : (
-                  <div className="h-16 w-16 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/5 flex items-center justify-center shrink-0">
-                    <Bell size={20} className="text-slate-400" />
-                  </div>
-                )}
-              </div>
-
-              {/* LIVE QUEUE SUMMARY LIST */}
-              <div className="border border-slate-205 dark:border-white/5 rounded-2xl p-4 bg-slate-50/50 dark:bg-[#130E1F]/30">
-                <h3 className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3 flex items-center justify-between">
-                  <span>{t.currentQueue}</span>
-                  <span className="px-2 py-0.5 rounded-full bg-slate-105 dark:bg-white/5 font-mono">
-                    {queue.length} {t.candidates}
-                  </span>
-                </h3>
-
-                <div className="space-y-2 max-h-56 overflow-y-auto pr-1">
-                  {queue.length > 0 ? (
-                    queue.map((p, index) => (
-                      <div
-                        key={p.id}
-                        className="p-2.5 rounded-xl bg-white dark:bg-[#1A1426] border border-slate-150 dark:border-white/5 flex items-center justify-between"
-                      >
-                        <div className="flex items-center gap-3">
-                          <span className="text-xs font-mono font-bold text-teal-600 dark:text-teal-400 w-12 shrink-0">
-                            #{p.tokenNumber}
-                          </span>
-                          <span className="text-xs font-bold text-slate-800 dark:text-slate-200 max-w-[130px] truncate">
-                            {p.name.replace(/(?<=.{3})./g, '*')} {/* mask name for patient privacy on display board */}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-[9px] font-bold bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded-md text-slate-500 font-mono">
-                            {t.waitRank}{index + 1}
-                          </span>
-                          <span className="text-[9px] font-bold text-indigo-600 dark:text-indigo-400">
-                            ~{index * avgWaitTimePerPatient} {t.mins}
-                          </span>
-                        </div>
-                      </div>
-                    ))
-                  ) : (
-                    <p className="text-[11px] text-center text-slate-400 py-6">
-                      {t.emptyQueue}
+                    <p className="text-[10px] uppercase text-slate-400 dark:text-slate-505 mt-1.5 tracking-wider font-bold">
+                      Please wait for the next announcements
                     </p>
-                  )}
+                  </div>
+                )}
+              </div>
+
+              {/* Triage Info Summary Footer */}
+              <div className="border-t border-slate-200 dark:border-slate-800/80 pt-4 mt-6 flex justify-between items-center text-[10px] text-slate-500 dark:text-slate-450 font-bold uppercase tracking-wider">
+                <span>System Gate: Active</span>
+                <span className="text-teal-600 dark:text-teal-400">Ayushman Live</span>
+              </div>
+            </div>
+
+            {/* Right Panel: Waitlist Queue Table */}
+            <div className="lg:col-span-7 bg-white/70 dark:bg-[#1A1426]/60 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 flex flex-col justify-between shadow-lg">
+              <div>
+                <div className="flex items-center justify-between mb-4 border-b border-slate-200 dark:border-slate-800 pb-3">
+                  <h3 className="text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 flex items-center gap-2">
+                    <Activity size={12} className="text-teal-600 dark:text-teal-400" />
+                    <span>{t.currentQueue}</span>
+                  </h3>
+                  <span className="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 font-mono text-[10px] font-bold text-teal-600 dark:text-teal-400">
+                    {queue.length} {t.candidates} Waiting
+                  </span>
+                </div>
+
+                <div className="overflow-x-auto custom-scrollbar max-h-80 overflow-y-auto pr-1">
+                  <table className="w-full text-left text-xs">
+                    <thead>
+                      <tr className="border-b border-slate-200 dark:border-slate-800 text-slate-550 dark:text-slate-400 uppercase tracking-widest text-[9px] font-bold">
+                        <th className="py-2.5 font-bold">Token</th>
+                        <th className="py-2.5 font-bold">Patient Name</th>
+                        <th className="py-2.5 font-bold">Wait Position</th>
+                        <th className="py-2.5 font-bold text-right">Est. Wait Time</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100 dark:divide-slate-850 text-slate-600 dark:text-slate-350">
+                      {queue.length > 0 ? (
+                        queue.map((p, index) => (
+                          <tr key={p.id} className="hover:bg-slate-50/50 dark:hover:bg-white/5 transition-colors border-b border-slate-100 dark:border-slate-850">
+                            <td className="py-3 font-bold font-mono text-teal-600 dark:text-teal-400">#{p.tokenNumber}</td>
+                            <td className="py-3">
+                              <span className="font-bold text-slate-800 dark:text-white">
+                                {translatePatientName(p.name, lang).replace(/(?<=.{3})./g, '*')}
+                              </span>
+                              <span className="block text-[8px] text-slate-500 dark:text-slate-450 uppercase mt-0.5">
+                                {p.visitType}
+                              </span>
+                            </td>
+                            <td className="py-3">
+                              <span className="inline-flex items-center px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-605 dark:text-slate-400 font-mono font-bold text-[9px]">
+                                {t.waitRank}{index + 1}
+                              </span>
+                            </td>
+                            <td className="py-3 text-right">
+                              <span className="inline-flex items-center px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-650 dark:text-indigo-400 border border-indigo-500/20 dark:border-indigo-500/30 font-bold text-[9px]">
+                                ~{index * avgWaitTimePerPatient} {t.mins}
+                              </span>
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan={4} className="py-10 text-center text-slate-500">
+                            <Globe size={24} className="mx-auto mb-2 opacity-30 stroke-[1.5]" />
+                            <p className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">{t.emptyQueue}</p>
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
                 </div>
               </div>
 
-            </div>
-
-            {/* middle col: Self OPD Slip generator (Patient input) */}
-            <div className="lg:col-span-4 space-y-4">
-              
-              {/* LOOKUP TICKET COMPONENT */}
-              <div className="bg-indigo-500/5 border border-indigo-500/10 p-4 rounded-2xl">
-                <h3 className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 mb-2 flex items-center gap-1.5">
-                  <Search size={12} />
-                  <span>{t.lookupTitle}</span>
-                </h3>
-
-                <form onSubmit={handleLookup} className="flex gap-2">
-                  <input
-                    type="text"
-                    required
-                    placeholder={t.placeholderLookup}
-                    value={lookupPhone}
-                    onChange={(e) => setLookupPhone(e.target.value)}
-                    className="flex-1 px-3 py-1.5 text-xs text-slate-800 dark:text-white bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-lg focus:outline-hidden"
-                  />
-                  <button
-                    type="submit"
-                    className="px-3 py-1.5 bg-indigo-500 text-white font-bold text-xs uppercase tracking-wider rounded-lg hover:bg-indigo-600 cursor-pointer transition-all"
-                  >
-                    {t.find}
-                  </button>
-                </form>
-
-                {lookupSearched && (
-                  <div className="mt-3 text-xs">
-                    {lookupResult ? (
-                      <div className="p-3 bg-white dark:bg-[#1A1426] rounded-xl border border-indigo-500/20 space-y-1.5">
-                        <div className="flex justify-between font-bold">
-                          <span className="text-slate-800 dark:text-white">{lookupResult.name}</span>
-                          <span className="text-teal-600 dark:text-teal-450">Token #{lookupResult.tokenNumber}</span>
-                        </div>
-                        <p className="text-[10px] text-slate-500 dark:text-slate-400">
-                          {t.visitType}: <span className="font-semibold">{getTranslatedVisitType(lookupResult.visitType)}</span>
-                        </p>
-                        <div className="bg-indigo-500/10 p-2 rounded-lg text-center font-bold text-indigo-700 dark:text-indigo-400 text-[10px] uppercase">
-                          {queue.findIndex(q => q.id === lookupResult.id) + 1} {t.queueStatusAhead}
-                        </div>
-                      </div>
-                    ) : (
-                      <p className="text-[10px] font-semibold text-rose-505 text-rose-500 mt-1">
-                        {t.patientNotFound}
-                      </p>
-                    )}
-                  </div>
-                )}
+              {/* Quick stats at bottom of table */}
+              <div className="bg-slate-100/50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 rounded-xl p-3 flex items-center justify-between text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mt-4">
+                <span>Queue Flow Speed</span>
+                <span className="text-teal-600 dark:text-teal-400">~{avgWaitTimePerPatient} mins / patient</span>
               </div>
+            </div>
 
-              {/* TICKET REGISTRATOR CARD */}
-              <div className="bg-slate-50 dark:bg-white/5 p-4 rounded-2xl border border-slate-200 dark:border-white/5">
-                <h3 className="text-xs font-bold text-slate-805 dark:text-white uppercase tracking-tight flex items-center gap-1.5 mb-3">
-                  <Flame size={12} className="text-pink-500" />
-                  <span>{t.generateToken}</span>
-                </h3>
+          </div>
 
-                {patientRegSuccess ? (
-                  <div className="text-center p-4 bg-teal-500/10 rounded-xl border border-teal-500/25 space-y-3.5">
-                    <CheckCircle2 className="text-teal-500 w-12 h-12 mx-auto" />
-                    <div>
-                      <h4 className="text-xs font-bold text-teal-600 dark:text-teal-400 uppercase tracking-tight">{t.tokenRegistered}</h4>
-                      <p className="text-[32px] font-extrabold text-slate-800 dark:text-white font-mono mt-1">
-                        #{patientRegSuccess}
-                      </p>
-                      <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1.5 max-w-xs mx-auto leading-normal">
-                        {t.successInfo}
-                      </p>
-                    </div>
-                    <button
-                      onClick={() => setPatientRegSuccess(null)}
-                      className="px-4 py-1.5 bg-teal-500 hover:bg-teal-600 text-[#0F0A1A] font-extrabold uppercase tracking-wider text-[9px] rounded-lg cursor-pointer"
-                    >
-                      {t.bookAnother}
-                    </button>
-                  </div>
-                ) : (
-                  <form onSubmit={handlePatientRegister} className="space-y-3">
-                    <div>
-                      <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
-                        {t.labelFullName}
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        placeholder="e.g. Ramesh Patel"
-                        value={patientName}
-                        onChange={(e) => setPatientName(e.target.value)}
-                        className="w-full px-3 py-1.5 text-xs text-slate-800 dark:text-white bg-white dark:bg-white/5 border border-slate-205 dark:border-white/10 rounded-lg focus:outline-hidden"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
-                        {t.labelMobile}
-                      </label>
-                      <input
-                        type="tel"
-                        required
-                        placeholder="e.g. 98765-43210"
-                        value={patientPhone}
-                        onChange={(e) => setPatientPhone(e.target.value)}
-                        className="w-full px-3 py-1.5 text-xs text-slate-800 dark:text-white bg-white dark:bg-white/5 border border-slate-205 dark:border-white/10 rounded-lg focus:outline-hidden"
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-2">
-                      <div>
-                        <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
-                          {t.labelOpdUnit}
-                        </label>
-                        <select
-                          value={patientVisit}
-                          onChange={(e) => setPatientVisit(e.target.value as any)}
-                          className="w-full px-2 py-1.5 text-xs text-slate-800 dark:text-white bg-white dark:bg-white/5 border border-slate-205 dark:border-white/10 rounded-lg focus:outline-hidden"
-                        >
-                          <option value="Consultation">{t.unitConsultation}</option>
-                          <option value="Follow-up">{t.unitCheckup}</option>
-                          <option value="Diagnostic Test">{t.unitDiagnostics}</option>
-                          <option value="Vaccination">{t.unitVaccination}</option>
-                          <option value="pediatric">{t.unitPediatric}</option>
-                        </select>
-                      </div>
-
-                      <div>
-                        <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
-                          {t.labelPriority}
-                        </label>
-                        <select
-                          value={patientPriority}
-                          onChange={(e) => setPatientPriority(e.target.value as any)}
-                          className="w-full px-2 py-1.5 text-xs text-slate-800 dark:text-white bg-white dark:bg-white/5 border border-slate-205 dark:border-white/10 rounded-lg focus:outline-hidden"
-                        >
-                          <option value="Regular">{t.priorityRegular}</option>
-                          <option value="Priority (Child/Infant)">{t.priorityChild}</option>
-                          <option value="Priority (Senior/Disabled)">{t.prioritySenior}</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <button
-                      type="submit"
-                      className="w-full py-2 bg-indigo-500 hover:bg-indigo-600 text-white font-extrabold uppercase tracking-wider text-[10px] rounded-lg cursor-pointer transition-all active:scale-97 text-center block mt-2"
-                    >
-                      {t.btnProcessToken}
-                    </button>
-                  </form>
-                )}
-
+          {/* Scrolling Announcement Marquee Ticker */}
+          <div className="w-full bg-slate-100 dark:bg-[#050309] border border-slate-200 dark:border-slate-800/60 rounded-2xl py-3 px-4.5 overflow-hidden mt-2 flex items-center gap-3">
+            <span className="text-[10px] font-extrabold uppercase tracking-widest text-white dark:text-[#0b0813] bg-teal-600 dark:bg-teal-400 px-2 py-0.5 rounded shrink-0 z-10 shadow-sm">
+              {t.announcementsTitle}
+            </span>
+            <div className="relative w-full overflow-hidden h-4 flex items-center">
+              <div className="absolute whitespace-nowrap text-[11px] font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400 font-mono animate-marquee">
+                {t.announcementTicker}
               </div>
-
             </div>
-
-            {/* right col: Phone mockup SMS notifications */}
-            <div className="lg:col-span-3">
-              <PhoneMockup smsMessages={smsMessages} t={getReceptionistTranslation(lang)} />
-            </div>
-
           </div>
 
         </div>

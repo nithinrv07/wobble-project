@@ -1,6 +1,6 @@
-# QueueCure — High-Fidelity Indian-Localized OPD Queue Management System
+# ClinicQ — High-Fidelity Indian-Localized OPD Queue Management System
 
-QueueCure is a modern, premium, and feature-rich outpatient department (OPD) queue management system customized for Indian clinical workflows. Designed to minimize patient waiting anxiety and optimize hospital triage efficiency, QueueCure bridges the gap between waiting halls and consulting rooms with real-time tracking, multi-language support, automated speech calling, and interactive SMS alerts simulation.
+ClinicQ is a modern, premium, and feature-rich outpatient department (OPD) queue management system customized for Indian clinical workflows. Designed to minimize patient waiting anxiety and optimize hospital triage efficiency, ClinicQ bridges the gap between waiting halls and consulting rooms with real-time tracking, multi-language support, automated speech calling, and interactive SMS alerts simulation.
 
 ---
 
@@ -85,7 +85,7 @@ wobble project/
 │   │   ├── GitHubImport.tsx        # Simulated portfolio meta importer
 │   │   ├── HistoryLog.tsx          # Audit trail table & CSV exporter
 │   │   ├── PhoneMockup.tsx         # Visual SMS simulation viewport
-│   │   ├── RoleGuardLanding.tsx    # Secure role entry gate (passcode: swasthya)
+│   │   ├── RoleGuardLanding.tsx    # Secure role entry gate (passcode: Admin123)
 │   │   ├── ServingRoom.tsx         # Operator cabin dispatcher module
 │   │   └── StatsGrid.tsx           # Multi-metric KPI board
 │   ├── utils/
@@ -105,7 +105,7 @@ wobble project/
 ##  Access Credentials
 
 To enter the **OPD Desk Operator Console** from the gate selector:
-- **Passcode**: `swasthya`
+- **Passcode**: `Admin123`
 
 ---
 
