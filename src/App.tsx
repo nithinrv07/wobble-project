@@ -26,7 +26,7 @@ import { getReceptionistTranslation } from './utils/receptionistTranslations';
 export default function App() {
   // Role Guard State
   const [roleUnlocked, setRoleUnlocked] = useState<boolean>(() => {
-    const cached = localStorage.getItem('clinic_role_unlocked');
+    const cached = sessionStorage.getItem('clinic_role_unlocked');
     return cached === 'true';
   });
 
@@ -163,7 +163,7 @@ export default function App() {
   }, [theme]);
 
   useEffect(() => {
-    localStorage.setItem('clinic_role_unlocked', roleUnlocked.toString());
+    sessionStorage.setItem('clinic_role_unlocked', roleUnlocked.toString());
   }, [roleUnlocked]);
 
   useEffect(() => {
@@ -193,8 +193,6 @@ export default function App() {
           setTokenCounter(parseInt(e.newValue, 10));
         } else if (e.key === 'clinic_sms_messages' && e.newValue) {
           setSmsMessages(JSON.parse(e.newValue));
-        } else if (e.key === 'clinic_role_unlocked' && e.newValue) {
-          setRoleUnlocked(e.newValue === 'true');
         } else if (e.key === 'clinic_theme' && e.newValue) {
           setTheme(e.newValue as 'light' | 'dark');
         } else if (e.key === 'clinic_receptionist_lang' && e.newValue) {
@@ -501,7 +499,7 @@ export default function App() {
             <button
               onClick={() => {
                 setRoleUnlocked(false);
-                localStorage.setItem('clinic_role_unlocked', 'false');
+                sessionStorage.setItem('clinic_role_unlocked', 'false');
               }}
               title="Lock Console / Change Role"
               className="px-3 py-1.5 flex items-center gap-1 border border-rose-200 dark:border-rose-500/20 bg-rose-500/5 hover:bg-rose-500 hover:text-white text-rose-600 dark:text-rose-400 text-[10px] font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer active:scale-95"
